@@ -71,11 +71,11 @@ int HandleText(char* text, size_t text_size, hash_table_t* table, int mode, stat
 
         if (word_len > 0)
         {
-            *curr = '\0';
+            *curr  = '\0';
+             curr -= word_len;
 
-            curr -= word_len;
-
-            int bucket_number = table->func(curr, word_len) % NBUCKETS;
+            // int bucket_number = table->func(curr, word_len) % NBUCKETS;
+            int bucket_number = __CRC32(curr, word_len) % NBUCKETS;
 
             int checking_result = IsInTable(curr, table->buckets[bucket_number]);
 
@@ -90,16 +90,7 @@ int HandleText(char* text, size_t text_size, hash_table_t* table, int mode, stat
 
             if (mode == CHECKING)
             {
-                switch(checking_result)
-                {
-                    case PRESENCE:  stats->words_in++;
-                                    break;
-
-                    case ABSENCE:   stats->words_out++;
-                                    break;
-
-                    default:        break;
-                }
+                (checking_result == PRESENCE) ? stats->words_in++ : stats->words_out++;
             }
 
             curr += word_len;

@@ -79,7 +79,7 @@ In future work, we will use CRC32 function because it has an assembly instructio
 
 We will use valgrind 3.22.0 for profiling (kcachegrind 23.08.5 for visualization).
 
-![call1](img/callgrind1.png)
+![call1](img/call1.png)
 
 Thus, the main hotspots are the CRC32 function and strcmp()
 
@@ -87,3 +87,45 @@ Thus, the main hotspots are the CRC32 function and strcmp()
 
  - Use **Intrinsics** or **assembly instructions** for CRC32 function and strcmp()
  - Optimize input data (**alignment**)
+
+ ### Using Intrinsics for CRC32 function
+
+ ```bash
+    uint32_t __CRC32(const char* key, int length)
+{
+    const uint8_t* key8 = (const uint8_t*) key;
+
+    uint32_t crc = 0xFFFFFFFF;
+
+    while (length && ((uintptr_t) key8 & 7))
+    {
+        crc = _mm_crc32_u8(crc, *key8);
+
+        key8++;
+        length--;
+    }
+
+    const uint64_t* key64 = (const uint64_t*) key8;
+
+    while (length >= 8)
+    {
+        crc = (uint32_t) _mm_crc32_u64(crc, *key64);
+
+        key64++;
+        length -= 8;
+    }
+
+    key8 = (const uint8_t*) key64;
+
+    while (length--)
+    {
+        crc = _mm_crc32_u8(crc, *key8);
+        key8++;
+    }
+
+    return crc ^ 0xFFFFFFFF;
+```
+
+ ![call2](img/call2.png)
+
+**WOW!** IT WORKS!

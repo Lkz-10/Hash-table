@@ -22,9 +22,7 @@ enum hash_funcs
     HASH_ASCII      = 2,
     HASH_POS        = 3,
     HASH_DJB2       = 4,
-    HASH_CRC32      = 5,
-    HASH_CRC32_SSE  = 6
-    // HASH_CRC32_ASM  = 7
+    HASH_CRC32      = 5
 };
 
 enum table_contents

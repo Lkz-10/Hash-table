@@ -37,8 +37,6 @@ hash_func_ptr_t FunctionPtr(enum hash_funcs name)
         case HASH_POS:          return HashPos;
         case HASH_DJB2:         return HashDJB2;
         case HASH_CRC32:        return HashCRC32;
-        case HASH_CRC32_SSE:    return __CRC32;
-        // case HASH_CRC32_ASM:    return CRC32_ASM;
 
         default:
             fprintf(stderr, "Unknown hash function: %d\n", name);
