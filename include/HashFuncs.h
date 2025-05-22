@@ -8,6 +8,8 @@
 
 #include "Globals.h"
 
+extern "C" uint32_t CRC32_ASM(const char* key, int length);
+
 uint32_t    HashLength      (const char* key, int length);
 uint32_t    HashASCII       (const char* key, int length);
 uint32_t    HashPos         (const char* key, int length);

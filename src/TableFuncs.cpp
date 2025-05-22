@@ -1,9 +1,5 @@
-#include <string.h>
 #include "../include/TableFuncs.h"
 #include "../include/HashFuncs.h"
-#include <time.h>
-
-extern "C" uint32_t CRC32_ASM(const char* key, int length);
 
 int HashTableCtor(hash_table_t* hash_table, enum hash_funcs func_name)
 {
@@ -195,7 +191,7 @@ int Dump(node_t** buckets, const char* file_name)
     fprintf(file_ptr, "    node [shape=record];\n");
     fprintf(file_ptr, "    rankdir=HT;\n");
     fprintf(file_ptr, "    splines=false;\n");
-    /**/fprintf(file_ptr, "    HashTable [style=filled, fillcolor=plum1, height=0.8, width=%d.0 label=\"", NBUCKETS);
+    fprintf(file_ptr, "    HashTable [style=filled, fillcolor=plum1, height=0.8, width=%d.0 label=\"", NBUCKETS);
 
     for (int i = 0; i < NBUCKETS; ++i)
     {
@@ -228,6 +224,18 @@ int Dump(node_t** buckets, const char* file_name)
     fprintf(file_ptr, "}\n");
 
     fclose(file_ptr);
+
+    return OK;
+}
+
+
+int ArgcCheck(const int argc)
+{
+    if (argc != ARGC)
+    {
+        fprintf(stderr, "Wrong number of arguments for main() - %d (need %d)\n", argc, ARGC);
+        return ERROR;
+    }
 
     return OK;
 }

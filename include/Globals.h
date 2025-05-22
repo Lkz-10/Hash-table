@@ -6,7 +6,7 @@
 #include <string.h>
 
 const int ARGC     = 3;
-const int NBUCKETS = 23;
+const int NBUCKETS = 14363;
 
 typedef unsigned int (*hash_func_ptr_t)(const char* key, int length);
 

@@ -2,6 +2,7 @@
 #define __LIST_FUNCS_H__
 
 #include <immintrin.h>
+#include <string.h>
 
 #include "../include/Globals.h"
 
@@ -14,5 +15,6 @@ int             IsInTable       (char* word, node_t* node);
 int             NewStrcmp       (const char* str1, const char* str2);
 int             GetData         (hash_table_t* table, const char* file_name);
 int             Dump            (node_t** buckets, const char* file_name);
+int             ArgcCheck       (const int argc);
 
 #endif
